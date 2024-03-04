@@ -206,6 +206,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 vim.diagnostic.config { update_in_insert = true }
 vim.diagnostic.config { underline = true }
 
+vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open Neogit' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -584,6 +586,15 @@ require('lazy').setup {
         tsserver = {
           settings = {},
         },
+
+        stylelint_lsp = {
+          settings = {
+            stylelintplus = {
+              autoFixOnSave = true,
+              autoFixOnFormat = true,
+            },
+          },
+        },
         --
 
         lua_ls = {
@@ -661,6 +672,12 @@ require('lazy').setup {
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
+        html = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -828,7 +845,15 @@ require('lazy').setup {
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
+        auto_tag = {
+          enable = true,
+          filetypes = { 'html', 'tsx', 'javascript', 'typescript', 'typescriptreact' },
+        },
       }
+      require('treesitter-context').setup {
+        max_lines = 5,
+      }
+      -- require'nvim-ts-autotag'
 
       -- There are additional nvim-treesitter modules that you can use to interact
       -- with nvim-treesitter. You should go explore a few and see what interests you:
