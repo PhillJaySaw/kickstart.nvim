@@ -87,6 +87,15 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+
+function Map(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend('force', options, opts)
+  end
+  vim.keymap.set(mode, lhs, rhs, options)
+end
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -99,7 +108,7 @@ vim.g.maplocalleader = ' '
 vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -146,7 +155,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -183,6 +192,19 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+vim.keymap.set('n', '<leader>ex', ':Telescope file_browser<CR>', { noremap = true })
+
+vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true })
+vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
+vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
+vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true })
+
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
+
+vim.diagnostic.config { update_in_insert = true }
+vim.diagnostic.config { underline = true }
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -228,12 +250,12 @@ require('lazy').setup {
   --
   -- Use `opts = {}` to force a plugin to be loaded.
   --
-  --  This is equivalent to:
+  --  This is equivalent to
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
-
+  -- { 'numToStr/Comment.nvim', opts = {} },
+  --
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
   --    require('gitsigns').setup({ ... })
@@ -315,7 +337,7 @@ require('lazy').setup {
       -- Useful for getting pretty icons, but requires special font.
       --  If you already have a Nerd Font, or terminal set up with fallback fonts
       --  you can enable this
-      -- { 'nvim-tree/nvim-web-devicons' }
+      { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -349,16 +371,34 @@ require('lazy').setup {
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          layout_strategy = 'horizontal',
+          border = true,
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          --           file_browser = {
+          --             theme = 'ivy',
+          --             -- disables netrw and use telescope-file-browser in its place
+          --             hijack_netrw = true,
+          --             mappings = {
+          --               ['i'] = {
+          --                 -- your custom insert mode mappings
+          --               },
+          --               ['n'] = {
+          --                 -- your custom normal mode mappings
+          --               },
+          --             },
+          --           },
         },
       }
 
       -- Enable telescope extensions, if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'file_browser')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -541,7 +581,9 @@ require('lazy').setup {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        tsserver = {
+          settings = {},
+        },
         --
 
         lua_ls = {
@@ -618,7 +660,7 @@ require('lazy').setup {
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -814,7 +856,7 @@ require('lazy').setup {
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
