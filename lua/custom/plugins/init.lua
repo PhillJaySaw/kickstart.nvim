@@ -26,4 +26,8 @@ return {
     },
     config = true,
   },
+  {
+    'github/copilot.vim',
+  },
+  { 'catppuccin/nvim', name = 'catppuccino', priority = 1000 },
 }

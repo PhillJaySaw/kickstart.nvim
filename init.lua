@@ -193,7 +193,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<leader>ex', ':Telescope file_browser<CR>', { noremap = true })
+vim.keymap.set('n', '<space>fb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })
 
 vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true })
 vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
@@ -203,7 +203,7 @@ vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
-vim.diagnostic.config { update_in_insert = true }
+-- vim.diagnostic.config { update_in_insert = true }
 vim.diagnostic.config { underline = true }
 
 vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open Neogit' })
@@ -376,6 +376,7 @@ require('lazy').setup {
         defaults = {
           layout_strategy = 'horizontal',
           border = true,
+          path_display = { 'truncate' },
         },
         extensions = {
           ['ui-select'] = {
@@ -412,7 +413,6 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -437,6 +437,10 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      vim.keymap.set('n', '<leader>s.', function()
+        builtin.oldfiles { only_cwd = true }
+      end, { desc = '[S]earch Recent Files ("." for repeat)' })
     end,
   },
 
@@ -594,6 +598,16 @@ require('lazy').setup {
               autoFixOnFormat = true,
             },
           },
+        },
+
+        eslint = {
+          --- ...
+          on_attach = function(config, bufnr)
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = bufnr,
+              command = 'EslintFixAll',
+            })
+          end,
         },
         --
 
@@ -853,7 +867,9 @@ require('lazy').setup {
         },
       }
       require('treesitter-context').setup {
-        max_lines = 5,
+        max_lines = 10,
+        multiline_threshold = 3,
+        trim_scope = 'inner',
       }
       -- require'nvim-ts-autotag'
 
