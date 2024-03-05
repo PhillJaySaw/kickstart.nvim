@@ -30,4 +30,6 @@ return {
     'github/copilot.vim',
   },
   { 'catppuccin/nvim', name = 'catppuccino', priority = 1000 },
+  'prisma/vim-prisma',
+  { 'akinsho/toggleterm.nvim', version = '*', config = true },
 }

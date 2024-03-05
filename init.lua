@@ -193,18 +193,19 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<space>fb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
 vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true })
 vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
 vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
 vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true })
 
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
-
+vim.keymap.set('n', '<leader>ec', ':e $MYVIMRC<CR>', { noremap = true, desc = '[E]dit [C]onfig' })
 -- vim.diagnostic.config { update_in_insert = true }
 vim.diagnostic.config { underline = true }
+
+vim.keymap.set('n', '<leader>tt', ':ToggleTerm<CR>', { noremap = true, desc = '[T]erminal [T]oggle' })
 
 vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open Neogit' })
 
@@ -414,6 +415,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
