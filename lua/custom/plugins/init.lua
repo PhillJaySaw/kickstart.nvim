@@ -35,4 +35,7 @@ return {
   'rebelot/kanagawa.nvim',
   'JoosepAlviste/palenightfall.nvim',
   { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false, priority = 1000 },
+  'decaycs/decay.nvim',
+  'navarasu/onedark.nvim',
+  'mattkubej/jest.nvim',
 }

@@ -912,5 +912,18 @@ require('lazy').setup {
   { import = 'custom.plugins' },
 }
 
+-- [[ Neovide configuration ]]
+
+if vim.g.neovide then
+  vim.o.guifont = 'Roboto Mono Medium for Powerline:h16'
+  vim.opt.linespace = 0
+  vim.g.neovide_remember_window_size = true
+  vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_show_border = true
+  vim.o.cmdheight = 1
+  vim.opt.linespace = 2
+  vim.g.neovide_scroll_animation_length = 0.1
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
