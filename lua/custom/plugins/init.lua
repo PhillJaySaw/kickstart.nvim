@@ -29,7 +29,10 @@ return {
   {
     'github/copilot.vim',
   },
-  { 'catppuccin/nvim', name = 'catppuccino', priority = 1000 },
+  { 'catppuccin/nvim', name = 'catppuccino' },
   'prisma/vim-prisma',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
+  'rebelot/kanagawa.nvim',
+  'JoosepAlviste/palenightfall.nvim',
+  { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false, priority = 1000 },
 }
