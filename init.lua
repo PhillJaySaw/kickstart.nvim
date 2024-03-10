@@ -131,6 +131,12 @@ vim.keymap.set('n', '<leader>wf', ':w<CR>', { noremap = true, desc = '[W]rite [A
 vim.keymap.set('n', '[c', function()
   require('treesitter-context').go_to_context(vim.v.count1)
 end, { silent = true })
+
+-- NEO TEST KEYMAPS
+vim.keymap.set('n', '<leader>tw', "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>", { noremap = true, desc = '[T]est [W]atch' })
+vim.keymap.set('n', '<leader>tr', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", { noremap = true, desc = '[T]est [R]un' })
+vim.keymap.set('n', '<leader>ts', 'require("neotest").run.stop()<cr>', { noremap = true, desc = '[T]est [S]top' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -261,8 +267,14 @@ require('lazy').setup {
 
       -- Useful for getting pretty icons, but requires special font.
       --  If you already have a Nerd Font, or terminal set up with fallback fonts
-      --  you can enable this
+      --    you can enable this
       { 'nvim-tree/nvim-web-devicons' },
+      {
+        'ahmedkhalf/project.nvim',
+        config = function()
+          require('project_nvim').setup {}
+        end,
+      },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -305,19 +317,6 @@ require('lazy').setup {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          --           file_browser = {
-          --             theme = 'ivy',
-          --             -- disables netrw and use telescope-file-browser in its place
-          --             hijack_netrw = true,
-          --             mappings = {
-          --               ['i'] = {
-          --                 -- your custom insert mode mappings
-          --               },
-          --               ['n'] = {
-          --                 -- your custom normal mode mappings
-          --               },
-          --             },
-          --           },
         },
       }
 
@@ -325,6 +324,7 @@ require('lazy').setup {
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'file_browser')
+      pcall(require('telescope').load_extension, 'project')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -338,7 +338,9 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch git s[T]atus' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
       vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
+      vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
