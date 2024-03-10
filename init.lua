@@ -10,6 +10,7 @@ function Map(mode, lhs, rhs, opts)
   end
   vim.keymap.set(mode, lhs, rhs, options)
 end
+-- ]]
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
