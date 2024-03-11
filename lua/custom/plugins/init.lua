@@ -1,41 +1,41 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
 return {
-  'nvim-telescope/telescope-file-browser.nvim',
-  dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  -- MISC
   'BurntSushi/ripgrep',
   'windwp/nvim-ts-autotag',
+  'nvim-treesitter/nvim-treesitter-context',
+  'prisma/vim-prisma',
+  'mattkubej/jest.nvim',
+  'github/copilot.vim',
+  --
+  -- THEMES
+  'rebelot/kanagawa.nvim',
+  'JoosepAlviste/palenightfall.nvim',
+  'decaycs/decay.nvim',
+  'navarasu/onedark.nvim',
+  { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false, priority = 1000 },
+  { 'catppuccin/nvim', name = 'catppuccino' },
+  --
+  -- PLUGINS
+  { 'nvim-telescope/telescope-file-browser.nvim', dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' } },
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
-    -- use opts = {} for passing setup options
-    -- this is equalent to setup({}) function
   },
-  'nvim-treesitter/nvim-treesitter-context',
   {
     'NeogitOrg/neogit',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
 
-      -- Only one of these is needed, not both.
-      'nvim-telescope/telescope.nvim', -- optional
+      'nvim-telescope/telescope.nvim',
     },
     config = true,
   },
-  {
-    'github/copilot.vim',
-  },
-  { 'catppuccin/nvim', name = 'catppuccino' },
-  'prisma/vim-prisma',
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
-  'rebelot/kanagawa.nvim',
-  'JoosepAlviste/palenightfall.nvim',
-  { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false, priority = 1000 },
-  'decaycs/decay.nvim',
-  'navarasu/onedark.nvim',
-  'mattkubej/jest.nvim',
+  {
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {},
+  },
 }

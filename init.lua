@@ -128,6 +128,29 @@ vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open 
 vim.keymap.set('n', '<leader>wa', ':wall<CR>', { noremap = true, desc = '[W]rite [A]ll' })
 vim.keymap.set('n', '<leader>wf', ':w<CR>', { noremap = true, desc = '[W]rite [A]ll' })
 
+-- TROUBLE KEYBINDINGS
+--
+-- Lua
+-- TODO cleanup these keymaps
+vim.keymap.set('n', '<leader>xx', function()
+  require('trouble').toggle()
+end, { noremap = true, desc = 'Toggle [T]rouble' })
+vim.keymap.set('n', '<leader>xw', function()
+  require('trouble').toggle 'workspace_diagnostics'
+end, { noremap = true, desc = 'Toggle [W]orkspace [D]iagnostics' })
+vim.keymap.set('n', '<leader>xd', function()
+  require('trouble').toggle 'document_diagnostics'
+end, { noremap = true, desc = 'Toggle [D]ocument [D]iagnostics' })
+vim.keymap.set('n', '<leader>xq', function()
+  require('trouble').toggle 'quickfix'
+end, { noremap = true, desc = 'Toggle [Q]uickfix' })
+vim.keymap.set('n', '<leader>xl', function()
+  require('trouble').toggle 'loclist'
+end, { noremap = true, desc = 'Toggle [L]oclist' })
+vim.keymap.set('n', 'gR', function()
+  require('trouble').toggle 'lsp_references'
+end, { noremap = true, desc = 'Toggle [L]SP [R]eferences' })
+
 vim.keymap.set('n', '[c', function()
   require('treesitter-context').go_to_context(vim.v.count1)
 end, { silent = true })
