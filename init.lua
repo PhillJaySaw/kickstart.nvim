@@ -121,8 +121,18 @@ vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
 vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true })
 
 vim.keymap.set('n', '<leader>ec', ':e $MYVIMRC<CR>', { noremap = true, desc = '[E]dit [C]onfig' })
--- vim.diagnostic.config { update_in_insert = true }
-vim.diagnostic.config { underline = true }
+
+vim.diagnostic.config {
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  float = {
+    border = 'rounded',
+    source = true,
+  },
+  severity_sort = true,
+}
 
 vim.keymap.set('n', '<leader>tt', ':ToggleTerm<CR>', { noremap = true, desc = '[T]erminal [T]oggle' })
 
@@ -131,6 +141,7 @@ vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open 
 vim.keymap.set('n', '<leader>wa', ':wall<CR>', { noremap = true, desc = '[W]rite [A]ll' })
 vim.keymap.set('n', '<leader>wf', ':w<CR>', { noremap = true, desc = '[W]rite [A]ll' })
 
+vim.keymap.set('n', '<leader>v', '<C-W>v', { noremap = true, desc = '[V]ertical split' })
 -- TROUBLE KEYBINDINGS
 --
 -- Lua
