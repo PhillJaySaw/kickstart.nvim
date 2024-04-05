@@ -76,6 +76,9 @@ vim.opt.scrolloff = 20
 vim.opt.spelllang = 'en_us'
 vim.opt.spell = false
 
+-- Command line height
+vim.o.cmdheight = 0
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -356,6 +359,9 @@ require('lazy').setup {
             },
           },
           lsp_references = {
+            show_line = false,
+          },
+          lsp_definitions = {
             show_line = false,
           },
         },
