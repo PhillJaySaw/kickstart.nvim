@@ -12,6 +12,13 @@ return {
   'JoosepAlviste/palenightfall.nvim',
   'decaycs/decay.nvim',
   'navarasu/onedark.nvim',
+  {
+    'sindrets/diffview.nvim',
+    keys = {
+      { '<leader>gc', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>' },
+      { '<leader>gd', '<cmd>DiffviewOpen<cr>' },
+    },
+  },
   { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false, priority = 1000 },
   { 'catppuccin/nvim', name = 'catppuccino' },
   --

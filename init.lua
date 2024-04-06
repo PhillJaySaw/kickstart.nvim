@@ -212,7 +212,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
-  change_detection = { notify = 'false' },
+  change_detection = { notify = false, enabled = false },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -900,6 +900,8 @@ require('lazy').setup {
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
 }
+
+-- require('lazy').setup("custom.plugins", {change_detection = {notify = "false"}})
 
 -- [[ Neovide configuration ]]
 
