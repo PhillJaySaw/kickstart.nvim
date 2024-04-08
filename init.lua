@@ -275,6 +275,9 @@ require('lazy').setup {
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = '[G]it,', _ = 'which_key_ignore' },
+        ['<leader>l'] = { name = '[L]sp,', _ = 'which_key_ignore' },
+        ['<leader>x'] = { name = 'Trouble,', _ = 'which_key_ignore' },
+        ['<leader>t'] = { name = '[T]erminal,', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -541,6 +544,10 @@ require('lazy').setup {
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+          -- Lsp additional keymaps
+          map('<leader>lr', '<cmd>LspRestart<CR>', '[L]sp [R]estart')
+          map('<leader>ll', '<cmd>LspLog<CR>', '[L]sp [L]og')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
