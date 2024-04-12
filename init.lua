@@ -173,9 +173,11 @@ vim.keymap.set('n', '[c', function()
 end, { silent = true })
 
 -- NEO TEST KEYMAPS
-vim.keymap.set('n', '<leader>tw', "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>", { noremap = true, desc = '[T]est [W]atch' })
-vim.keymap.set('n', '<leader>tr', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", { noremap = true, desc = '[T]est [R]un' })
-vim.keymap.set('n', '<leader>ts', 'require("neotest").run.stop()<cr>', { noremap = true, desc = '[T]est [S]top' })
+vim.keymap.set('n', '<leader>nw', "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>", { noremap = true, desc = '[N]eo test [W]atch' })
+vim.keymap.set('n', '<leader>nr', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", { noremap = true, desc = '[N]eo Test [R]un' })
+vim.keymap.set('n', '<leader>ns', 'require("neotest").run.stop()<cr>', { noremap = true, desc = '[N]eo test [S]top' })
+
+vim.keymap.set('n', '\\', '<C-6>', { noremap = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -242,7 +244,7 @@ require('lazy').setup {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
-      current_line_blame = true,
+      current_line_blame = false,
     },
   },
 
@@ -276,6 +278,7 @@ require('lazy').setup {
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = '[G]it,', _ = 'which_key_ignore' },
         ['<leader>l'] = { name = '[L]sp,', _ = 'which_key_ignore' },
+        ['<leader>n'] = { name = '[N]eo Test,', _ = 'which_key_ignore' },
         ['<leader>x'] = { name = 'Trouble,', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]erminal,', _ = 'which_key_ignore' },
       }
@@ -601,9 +604,10 @@ require('lazy').setup {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {
-        --   settings = {},
-        -- },
+        tsserver = {
+          single_file_support = false,
+          settings = {},
+        },
 
         stylelint_lsp = {
           settings = {
