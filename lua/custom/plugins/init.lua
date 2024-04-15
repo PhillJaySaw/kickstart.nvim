@@ -12,6 +12,11 @@ return {
   'JoosepAlviste/palenightfall.nvim',
   'decaycs/decay.nvim',
   'navarasu/onedark.nvim',
+  'vim-test/vim-test',
+  {
+    'dmmulroy/ts-error-translator.nvim',
+    config = true,
+  },
   {
     'sindrets/diffview.nvim',
     keys = {

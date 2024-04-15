@@ -86,6 +86,13 @@ vim.o.cmdheight = 0
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- vim-test settings
+vim.g['test#strategy'] = 'neovim_sticky'
+vim.g['test#neovim_sticky#kill_previous'] = 1
+vim.g['test#preserve_screen'] = 0
+vim.g['test#neovim_sticky#reopen_window'] = 1
+vim.g['test#neovim#term_position'] = 'vert botright 95'
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -173,12 +180,20 @@ vim.keymap.set('n', '[c', function()
 end, { silent = true })
 
 -- NEO TEST KEYMAPS
-vim.keymap.set('n', '<leader>nw', "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>", { noremap = true, desc = '[N]eo test [W]atch' })
-vim.keymap.set('n', '<leader>nr', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", { noremap = true, desc = '[N]eo Test [R]un' })
-vim.keymap.set('n', '<leader>ns', 'require("neotest").run.stop()<cr>', { noremap = true, desc = '[N]eo test [S]top' })
+vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', { noremap = true, desc = '[T]est [N]earest' })
+vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { noremap = true, desc = '[T]est [N]earest' })
+vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { noremap = true, desc = '[T]est [L]ast' })
+vim.keymap.set('n', '<leader>tv', ':TestVisti<CR>', { noremap = true, desc = '[T]est [V]isit' })
+
+vim.keymap.set('n', '<leader>twn', ':TestNearest --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
+vim.keymap.set('n', '<leader>twf', ':TestFile --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
+vim.keymap.set('n', '<leader>twl', ':TestLast --watch<CR>', { noremap = true, desc = '[T]est [W]atch [L]ast' })
 
 vim.keymap.set('n', '\\', '<C-6>', { noremap = true })
 
+vim.api.nvim_create_autocmd('TermOpen', {
+  command = 'setlocal listchars= nonumber norelativenumber nocursorline',
+})
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -604,10 +619,10 @@ require('lazy').setup {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {
-          single_file_support = false,
-          settings = {},
-        },
+        -- tsserver = {
+        --   single_file_support = false,
+        --   settings = {},
+        -- },
 
         stylelint_lsp = {
           settings = {
@@ -911,9 +926,6 @@ require('lazy').setup {
   -- require 'kickstart.plugins.indent_line',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
 }
 
