@@ -5,7 +5,6 @@ return {
   'nvim-treesitter/nvim-treesitter-context',
   'prisma/vim-prisma',
   'mattkubej/jest.nvim',
-  'github/copilot.vim',
   --
   -- THEMES
   'rebelot/kanagawa.nvim',
