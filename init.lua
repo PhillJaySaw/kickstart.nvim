@@ -195,6 +195,30 @@ vim.keymap.set('n', '\\', '<C-6>', { noremap = true })
 vim.api.nvim_create_autocmd('TermOpen', {
   command = 'setlocal listchars= nonumber norelativenumber nocursorline',
 })
+
+-- COPILOT KEYMAPS
+
+vim.keymap.set('n', '<leader>cp', ':Copilol panel<CR>', { noremap = true, desc = '[C]opilot [P]anel' })
+vim.keymap.set('n', '<leader>cc', ':Copilolchat<CR>', { noremap = true, desc = '[C]opilot [C]hat' })
+vim.keymap.set('n', '<leader>cd', ':Copilot disable', { noremap = true, desc = '[C]opilot [D]isbale' })
+vim.keymap.set('n', '<leader>ce', ':Copilot enable', { noremap = true, desc = '[C]opilot [E]enable' })
+
+-- COPILOT SUGGESTIONS KEYMAPS
+
+vim.keymap.set('i', '<Tab>', function()
+  if require('copilot.suggestion').is_visible() then
+    require('copilot.suggestion').accept()
+  else
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', false)
+  end
+end, { desc = 'Super Tab' })
+
+vim.keymap.set('i', '<C-l>', function()
+  if require('copilot.suggestion').is_visible() then
+    require('copilot.suggestion').accept_line()
+  end
+end, { noremap = true, desc = 'Accept Line' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
