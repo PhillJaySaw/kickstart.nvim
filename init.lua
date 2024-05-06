@@ -365,6 +365,23 @@ require('lazy').setup {
           }
         end,
       },
+      {
+        'nvim-neo-tree/neo-tree.nvim',
+        branch = 'v3.x',
+        dependencies = {
+          'nvim-lua/plenary.nvim',
+          'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+          'MunifTanjim/nui.nvim',
+          -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+        },
+        config = function()
+          require('neo-tree').setup {
+            window = {
+              position = 'float',
+            },
+          }
+        end,
+      },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -454,7 +471,8 @@ require('lazy').setup {
         })
       end, { desc = '[ ] Find existing buffers' })
 
-      vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
+      -- vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
+      vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
       vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranches' })
