@@ -13,6 +13,18 @@ return {
   'navarasu/onedark.nvim',
   'vim-test/vim-test',
   {
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    priotity = 1000,
+    config = function()
+      require('github-theme').setup {
+        -- ...
+      }
+
+      vim.cmd 'colorscheme github_dark_default'
+    end,
+  },
+  {
     'dmmulroy/ts-error-translator.nvim',
     config = true,
   },
