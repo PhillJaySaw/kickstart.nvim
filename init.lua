@@ -180,6 +180,9 @@ vim.keymap.set('n', '[c', function()
   require('treesitter-context').go_to_context(vim.v.count1)
 end, { silent = true })
 
+-- prevent p from overwriting the register in visual mode
+vim.keymap.set('v', 'p', '"0p', { noremap = true })
+
 -- NEO TEST KEYMAPS
 vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', { noremap = true, desc = '[T]est [N]earest' })
 vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { noremap = true, desc = '[T]est [N]earest' })
@@ -475,7 +478,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
-      vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = '[G]it [B]ranches' })
+      vim.keymap.set('n', '<leader>gb', ':Gitsigns blame_line<CR>', { desc = '[G]it [B]lame' })
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
