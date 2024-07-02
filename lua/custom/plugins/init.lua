@@ -12,6 +12,7 @@ return {
   'decaycs/decay.nvim',
   'navarasu/onedark.nvim',
   'vim-test/vim-test',
+  'tpope/vim-fugitive',
   {
     'projekt0n/github-nvim-theme',
     lazy = false,
