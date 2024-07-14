@@ -179,8 +179,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- COPILOT KEYMAPS
 
-vim.keymap.set('n', '<leader>cp', ':Copilol panel<CR>', { noremap = true, desc = '[C]opilot [P]anel' })
-vim.keymap.set('n', '<leader>cc', ':Copilolchat<CR>', { noremap = true, desc = '[C]opilot [C]hat' })
+vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { noremap = true, desc = '[C]opilot [P]anel' })
+vim.keymap.set('n', '<leader>cc', ':CopilotChatToggle<CR>', { noremap = true, desc = '[C]opilot [C]hat' })
 vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, desc = '[C]opilot [D]isbale' })
 vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>', { noremap = true, desc = '[C]opilot [E]enable' })
 
