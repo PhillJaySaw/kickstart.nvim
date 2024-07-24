@@ -9,5 +9,6 @@ return {
         return true
       end,
     },
+    enabled = false,
   },
 }
