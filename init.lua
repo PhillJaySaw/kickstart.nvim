@@ -84,7 +84,9 @@ vim.opt.shortmess = {
   o = true,
 }
 
+vim.opt.hidden = false
 vim.o.autoread = true
+vim.o.autowrite = true
 vim.o.autowriteall = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
