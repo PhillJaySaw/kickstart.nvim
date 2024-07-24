@@ -48,6 +48,7 @@ return {
       'nvim-telescope/telescope.nvim',
     },
     config = true,
+    enabled = false,
   },
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
   {

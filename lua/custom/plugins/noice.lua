@@ -37,5 +37,6 @@ return {
         },
       }
     end,
+    enabled = false,
   },
 }
