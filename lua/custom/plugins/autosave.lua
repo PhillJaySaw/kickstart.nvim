@@ -8,7 +8,7 @@ return {
         end
         return true
       end,
+      noautocmd = true,
     },
-    enabled = false,
   },
 }
