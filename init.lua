@@ -84,10 +84,10 @@ vim.opt.shortmess = {
   o = true,
 }
 
-vim.opt.hidden = false
 vim.o.autoread = true
-vim.o.autowrite = true
-vim.o.autowriteall = true
+-- vim.opt.hidden = false
+-- vim.o.autowrite = true
+-- vim.o.autowriteall = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -783,7 +783,10 @@ require('lazy').setup {
       notify_on_error = false,
       format_on_save = {
         timeout_ms = 1000,
-        lsp_fallback = 'fallback',
+        lsp_format = 'fallback',
+      },
+      format_after_save = {
+        lsp_format = 'fallback',
       },
       formatters_by_ft = {
         lua = { 'stylua' },
@@ -838,7 +841,10 @@ require('lazy').setup {
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
       luasnip.config.setup {}
+
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
       cmp.setup {
         snippet = {

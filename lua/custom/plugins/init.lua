@@ -1,7 +1,6 @@
 return {
   -- MISC
   'BurntSushi/ripgrep',
-  'windwp/nvim-ts-autotag',
   'nvim-treesitter/nvim-treesitter-context',
   'prisma/vim-prisma',
   'mattkubej/jest.nvim',
