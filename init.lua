@@ -617,7 +617,8 @@ require('lazy').setup {
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
+          -- Lsp go to type definition
+          map('gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
           -- Lsp additional keymaps
           map('<leader>lr', '<cmd>LspRestart<CR>', '[L]sp [R]estart')
           map('<leader>ll', '<cmd>LspLog<CR>', '[L]sp [L]og')
@@ -844,8 +845,6 @@ require('lazy').setup {
       local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
       luasnip.config.setup {}
 
-      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -973,11 +972,11 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'css', 'styled' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
-        indent = { enable = true },
+        indent = { enable = false },
         auto_tag = {
           enable = true,
           filetypes = { 'html', 'tsx', 'javascript', 'typescript', 'typescriptreact' },
