@@ -82,6 +82,12 @@ vim.opt.spell = false
 vim.o.cmdheight = 0
 vim.opt.shortmess = {
   o = true,
+  c = true,
+  s = true,
+  C = true,
+  F = true,
+  S = true,
+  W = true,
 }
 
 vim.o.autoread = true
