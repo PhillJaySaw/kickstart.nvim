@@ -136,6 +136,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 -- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 -- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<leader>f', ':w<CR>', { noremap = true, desc = 'Save(Update) file' })
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
@@ -283,6 +284,26 @@ require('lazy').setup {
         changedelete = { text = '~' },
       },
       current_line_blame = false,
+      on_attach = function()
+        local gitsigns = require 'gitsigns'
+        local map = function(mode, keys, func, desc)
+          vim.keymap.set(mode, keys, func, { desc = 'Git signs: ' .. desc })
+        end
+
+        -- Actions
+        map('n', '<leader>gr', gitsigns.reset_hunk, 'Reset hunk')
+        map('v', '<leader>gr', function()
+          gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, 'Reset hunk Visual')
+        map('n', '<leader>gR', gitsigns.reset_buffer, 'Reset buffer')
+        map('n', '<leader>gp', gitsigns.preview_hunk, 'Preview hunk')
+        map('n', '<leader>gtb', gitsigns.toggle_current_line_blame, 'Toggle current line blame')
+        map('n', '<leader>gtd', gitsigns.toggle_deleted, 'Toggle deleted')
+        -- map('n', '<leader>hd', gitsigns.diffthis)
+        -- map('n', '<leader>hD', function()
+        --   gitsigns.diffthis '~'
+        -- end)
+      end,
     },
   },
 
@@ -776,16 +797,16 @@ require('lazy').setup {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
+    -- keys = {
+    --   {
+    --     '<leader>f',
+    --     function()
+    --       require('conform').format { async = true, lsp_fallback = true }
+    --     end,
+    --     mode = '',
+    --     desc = '[F]ormat buffer',
+    --   },
+    -- },
     opts = {
       notify_on_error = false,
       format_on_save = {
@@ -865,8 +886,8 @@ require('lazy').setup {
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Scroll the documentation window [b]ack / [f]orward
-          ['<C-p>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-n>'] = cmp.mapping.scroll_docs(4),
+          -- ['<C-p>'] = cmp.mapping.scroll_docs(-4),
+          -- ['<C-n>'] = cmp.mapping.scroll_docs(4),
 
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
@@ -983,10 +1004,10 @@ require('lazy').setup {
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = false },
-        auto_tag = {
-          enable = true,
-          filetypes = { 'html', 'tsx', 'javascript', 'typescript', 'typescriptreact' },
-        },
+        -- auto_tag = {
+        --   enable = true,
+        --   filetypes = { 'html', 'tsx', 'javascript', 'typescript', 'typescriptreact' },
+        -- },
       }
       require('treesitter-context').setup {
         max_lines = 10,

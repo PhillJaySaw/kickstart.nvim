@@ -9,7 +9,7 @@ return {
       require('diffview').setup {
         view = {
           merge_tool = {
-            layout = 'diff3_mixed',
+            layout = 'diff1_plain',
             disable_diagnostics = true, -- Temporarily disable diagnostics for diff buffers while in the view.
             winbar_info = true,
           },

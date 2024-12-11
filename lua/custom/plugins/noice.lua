@@ -37,6 +37,6 @@ return {
         },
       }
     end,
-    enabled = false,
+    enabled = true,
   },
 }
