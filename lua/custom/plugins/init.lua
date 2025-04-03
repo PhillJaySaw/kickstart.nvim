@@ -56,8 +56,8 @@ return {
     opts = {
       settings = {
         tsserver_plugins = {
-          "@styled/typescript-styled-plugin",
-        }
+          '@styled/typescript-styled-plugin',
+        },
       },
     },
   },
@@ -79,4 +79,5 @@ return {
     },
   },
   { 'dmmulroy/tsc.nvim', config = true },
+  { 'jparise/vim-graphql' },
 }

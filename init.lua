@@ -90,7 +90,6 @@ vim.opt.shortmess = {
   W = true,
 }
 
-vim.o.autoread = true
 -- vim.opt.hidden = false
 -- vim.o.autowrite = true
 -- vim.o.autowriteall = true
@@ -141,10 +140,16 @@ vim.keymap.set('n', '<leader>f', ':w<CR>', { noremap = true, desc = 'Save(Update
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
-vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true })
-vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { noremap = true })
-vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { noremap = true })
-vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true })
+-- Zen mode
+vim.keymap.set('n', '<leader>z', ':ZenMode<CR>', { noremap = true })
+
+-- Move lines up and down in normal mode with J and K
+vim.api.nvim_set_keymap('n', '<M-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<M-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+
+-- Move selected lines up and down in visual mode with J and K
+vim.api.nvim_set_keymap('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>ec', ':e $MYVIMRC<CR>', { noremap = true, desc = '[E]dit [C]onfig' })
 
@@ -240,6 +245,15 @@ if not vim.uv.fs_stat(lazypath) then
   end
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
+
+-- Enable autoread
+vim.o.autoread = true
+
+-- Create an autocommand to check for file changes
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})
 
 -- [[ Configure and install plugins ]]
 --
@@ -714,6 +728,7 @@ require('lazy').setup {
         -- },
 
         stylelint_lsp = {
+          root_dir = require('lspconfig').util.root_pattern('package.json', '.git'),
           settings = {
             stylelintplus = {
               autoFixOnSave = true,
@@ -732,7 +747,7 @@ require('lazy').setup {
           end,
         },
         --
-
+        --
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},
@@ -775,6 +790,7 @@ require('lazy').setup {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
         'gopls',
+        'graphql-language-service-cli',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -999,7 +1015,7 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'css', 'styled' },
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'css', 'styled', 'graphql' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
