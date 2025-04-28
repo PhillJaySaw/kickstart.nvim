@@ -96,6 +96,10 @@ vim.opt.shortmess = {
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Reload all buffers
+vim.keymap.set('n', '<leader>be', ':bufdo e<CR>', { desc = 'Reload all buffers - [b]uffdo [e]'})
+
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -166,8 +170,6 @@ vim.diagnostic.config {
 }
 
 vim.keymap.set('n', '<leader>tt', ':ToggleTerm<CR>', { noremap = true, desc = '[T]erminal [T]oggle' })
-
-vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { noremap = true, desc = 'Open Neogit' })
 
 vim.keymap.set('n', '<leader>wa', ':wall<CR>', { noremap = true, desc = '[W]rite [A]ll' })
 vim.keymap.set('n', '<leader>wf', ':w<CR>', { noremap = true, desc = '[W]rite [A]ll' })
@@ -489,20 +491,20 @@ require('lazy').setup {
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      -- vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      -- vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+      -- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+      -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sc', builtin.resume, { desc = '[S]earch [C]ontinue' })
-      vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch git s[T]atus' })
-      vim.keymap.set('n', '<leader><leader>', function()
+      -- vim.keymap.set('n', '<leader>sc', builtin.resume, { desc = '[S]earch [C]ontinue' })
+      --vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch git s[T]atus' })
+      --[[ vim.keymap.set('n', '<leader><leader>', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         builtin.buffers(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
-      end, { desc = '[ ] Find existing buffers' })
+      end, { desc = '[ ] Find existing buffers' }) ]]
 
       -- vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
@@ -617,27 +619,27 @@ require('lazy').setup {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-T>.
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          -- map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          -- map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          -- map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          -- map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          -- map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace
           --  Similar to document symbols, except searches over your whole project.
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          -- map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
           -- Rename the variable under your cursor
           --  Most Language Servers support renaming across files, etc.
@@ -657,9 +659,9 @@ require('lazy').setup {
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           -- Lsp go to type definition
-          map('gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
+          -- map('gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
           -- Lsp additional keymaps
           map('<leader>lr', '<cmd>LspRestart<CR>', '[L]sp [R]estart')
           map('<leader>ll', '<cmd>LspLog<CR>', '[L]sp [L]og')
@@ -986,7 +988,7 @@ require('lazy').setup {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      require('mini.starter').setup()
+      -- require('mini.starter').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

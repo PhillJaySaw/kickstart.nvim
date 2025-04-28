@@ -35,6 +35,9 @@ return {
         messages = {
           enabled = false,
         },
+        notify = {
+          enabled = false,
+        },
       }
     end,
     enabled = true,
