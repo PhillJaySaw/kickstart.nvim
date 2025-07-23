@@ -19,7 +19,7 @@ return {
           { section = 'startup' },
         },
       },
-      explorer = { enabled = false, layout = { preset = 'ivy' } },
+      explorer = { enabled = false },
       indent = { enabled = false },
       input = { enabled = false },
       picker = {

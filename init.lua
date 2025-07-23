@@ -97,8 +97,7 @@ vim.opt.shortmess = {
 --  See `:help vim.keymap.set()`
 
 -- Reload all buffers
-vim.keymap.set('n', '<leader>be', ':bufdo e<CR>', { desc = 'Reload all buffers - [b]uffdo [e]'})
-
+vim.keymap.set('n', '<leader>be', ':bufdo e<CR>', { desc = 'Reload all buffers - [b]uffdo [e]' })
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
@@ -201,7 +200,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- COPILOT KEYMAPS
 
-vim.keymap.set('n', '<leader>cp', ':Copilot panel<CR>', { noremap = true, desc = '[C]opilot [P]anel' })
+vim.keymap.set('n', '<leader>cs', ':Copilot panel<CR>', { noremap = true, desc = '[C]opilot [P]anel' })
 vim.keymap.set('n', '<leader>cc', ':CopilotChatToggle<CR>', { noremap = true, desc = '[C]opilot [C]hat' })
 vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, desc = '[C]opilot [D]isbale' })
 vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>', { noremap = true, desc = '[C]opilot [E]enable' })
@@ -221,6 +220,15 @@ vim.keymap.set('i', '<C-l>', function()
     require('copilot.suggestion').accept_line()
   end
 end, { noremap = true, desc = 'Accept Line' })
+
+-- COPY FILE PATH
+vim.keymap.set('n', '<leader>cp', function()
+  local filepath = vim.fn.expand '%:p'
+  local gitroot = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
+  local relative = filepath:gsub(gitroot .. '/', '')
+  vim.fn.setreg('+', relative)
+  print('Copied: ' .. relative)
+end, { desc = '[C]opy file [P]ath' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
