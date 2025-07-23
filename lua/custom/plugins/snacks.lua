@@ -22,7 +22,20 @@ return {
       explorer = { enabled = false, layout = { preset = 'ivy' } },
       indent = { enabled = false },
       input = { enabled = false },
-      picker = { enabled = false },
+      picker = {
+        formatters = {
+          file = {
+            filename_only = false,
+            filename_first = false,
+            truncate = false,
+          },
+        },
+        sources = {
+          grep = {
+            layout = 'vertical',
+          },
+        },
+      },
       notifier = { enabled = true },
       quickfile = { enabled = false },
       scope = { enabled = false },
