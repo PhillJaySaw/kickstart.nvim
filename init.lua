@@ -223,9 +223,21 @@ end, { noremap = true, desc = 'Accept Line' })
 
 -- COPY FILE PATH
 vim.keymap.set('n', '<leader>cp', function()
-  local filepath = vim.fn.expand '%:p'
-  local gitroot = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
-  local relative = filepath:gsub(gitroot .. '/', '')
+  -- Get path relative to git root if in git repo, otherwise relative to cwd
+  local relative
+
+  -- Try git root first
+  local gitroot = vim.fn.system('git rev-parse --show-toplevel 2>/dev/null'):gsub('\n', '')
+
+  if vim.v.shell_error == 0 and gitroot ~= '' then
+    -- Relative to git root
+    local filepath = vim.fn.expand '%:p'
+    relative = vim.fn.substitute(filepath, '^' .. vim.pesc(gitroot) .. '/', '', '')
+  else
+    -- Fallback to relative to current working directory
+    relative = vim.fn.expand '%:.'
+  end
+
   vim.fn.setreg('+', relative)
   print('Copied: ' .. relative)
 end, { desc = '[C]opy file [P]ath' })
@@ -323,10 +335,8 @@ require('lazy').setup {
         map('n', '<leader>gp', gitsigns.preview_hunk, 'Preview hunk')
         map('n', '<leader>gtb', gitsigns.toggle_current_line_blame, 'Toggle current line blame')
         map('n', '<leader>gtd', gitsigns.toggle_deleted, 'Toggle deleted')
-        -- map('n', '<leader>hd', gitsigns.diffthis)
-        -- map('n', '<leader>hD', function()
-        --   gitsigns.diffthis '~'
-        -- end)
+        map('n', ']h', gitsigns.next_hunk, 'Next hunk')
+        map('n', '[h', gitsigns.prev_hunk, 'Next hunk')
       end,
     },
   },
@@ -499,22 +509,8 @@ require('lazy').setup {
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      -- vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      -- vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      -- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      -- vim.keymap.set('n', '<leader>sc', builtin.resume, { desc = '[S]earch [C]ontinue' })
-      --vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch git s[T]atus' })
-      --[[ vim.keymap.set('n', '<leader><leader>', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        builtin.buffers(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[ ] Find existing buffers' }) ]]
 
-      -- vim.keymap.set('n', '<leader>sb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
@@ -561,6 +557,7 @@ require('lazy').setup {
       -- Automatically install LSPs and related tools to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
+      { 'saghen/blink.cmp' },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -707,10 +704,10 @@ require('lazy').setup {
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP Specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+      --  When you add blink.cmp, Neovim now has *more* capabilities.
+      --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -862,6 +859,7 @@ require('lazy').setup {
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
+    enabled = false,
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -1025,23 +1023,7 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = {
-          'bash',
-          'c',
-          'diff',
-          'html',
-          'lua',
-          'luadoc',
-          'markdown',
-          'markdown_inline',
-          'query',
-          'vim',
-          'vimdoc',
-          'css',
-          'styled',
-          'graphql',
-          'python',
-        },
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'css', 'styled', 'graphql' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
