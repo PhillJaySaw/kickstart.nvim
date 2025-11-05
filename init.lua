@@ -232,7 +232,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGai
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
   change_detection = { notify = false, enabled = false },
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
   { 'numToStr/Comment.nvim', opts = {} },
 
