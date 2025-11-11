@@ -76,6 +76,11 @@ vim.opt.shortmess = {
   W = true,
 }
 
+-- Disable keymaps
+
+vim.keymap.set('n', 'q:', '<Nop>', { noremap = true, silent = true })
+vim.keymap.set('n', 'q/', '<Nop>', { noremap = true, silent = true })
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -684,7 +689,6 @@ require('lazy').setup {
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
     end,
   },
 
