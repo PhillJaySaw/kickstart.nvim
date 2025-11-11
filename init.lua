@@ -232,6 +232,12 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGai
   pattern = { '*' },
 })
 
+-- Copy file path
+
+vim.keymap.set('n', '<leader>cr', ':CopyRelativeFilePath<CR>', { noremap = true, desc = '[C]opy [R]elative file path' })
+vim.keymap.set('n', '<leader>ch', ':CopyRelativeFilePathFromHome<CR>', { noremap = true, desc = '[C]opy Relative file path from [H]ome' })
+vim.keymap.set('n', '<leader>cn', ':CopyFileName<CR>', { noremap = true, desc = '[C]opy file [N]ame' })
+
 -- [[ Configure and install plugins ]]
 --
 -- NOTE: Here is where you install your plugins.
@@ -249,7 +255,7 @@ require('lazy').setup {
 
       -- Document existing key chains
       require('which-key').add {
-        { '<leader>c', group = '[C]ode' },
+        { '<leader>c', group = '[C]ode/[C]opy' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
@@ -393,7 +399,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
-      vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = '[G]it [B]lame' })
+      -- vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = '[G]it [B]lame' })
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.

@@ -195,6 +195,34 @@ return {
         end,
         desc = 'Lazygit',
       },
+      {
+        '<leader>gl',
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = 'Git log',
+      },
+      {
+        '<leader>gf',
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = 'Git log file',
+      },
+      {
+        '<leader>br',
+        function()
+          Snacks.rename.rename_file()
+        end,
+        desc = 'Rename file',
+      },
+      {
+        '<leader>gb',
+        function()
+          Snacks.git.blame_file()
+        end,
+        desc = 'Rename file',
+      },
     },
   },
 }
