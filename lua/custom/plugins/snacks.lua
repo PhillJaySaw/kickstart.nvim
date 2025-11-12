@@ -48,7 +48,17 @@ return {
           },
         },
       },
-      notifier = { enabled = true },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+        style = 'fancy',
+        filter = function(n)
+          if n.msg == 'No information available' then
+            return false
+          end
+          return true
+        end,
+      },
       quickfile = { enabled = false },
       scope = { enabled = false },
       scroll = { enabled = false },
@@ -213,13 +223,6 @@ return {
         '<leader>br',
         function()
           Snacks.rename.rename_file()
-        end,
-        desc = 'Rename file',
-      },
-      {
-        '<leader>gb',
-        function()
-          Snacks.git.blame_file()
         end,
         desc = 'Rename file',
       },

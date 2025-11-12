@@ -399,7 +399,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sb', ':Neotree filesystem reveal<CR>', { noremap = true, desc = '[F]ile [B]rowser' })
       vim.keymap.set('n', '<leader>sp', ':Telescope projects<CR>', { desc = '[S]earch [P]roject' })
 
-      -- vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = '[G]it [B]lame' })
+      vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = '[G]it [B]lame' })
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
