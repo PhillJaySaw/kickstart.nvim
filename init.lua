@@ -154,14 +154,23 @@ end, { silent = true })
 vim.keymap.set('v', 'p', '"0p', { noremap = true })
 
 -- NEO TEST KEYMAPS
-vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', { noremap = true, desc = '[T]est [N]earest' })
-vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { noremap = true, desc = '[T]est [N]earest' })
-vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { noremap = true, desc = '[T]est [L]ast' })
-vim.keymap.set('n', '<leader>tv', ':TestVisti<CR>', { noremap = true, desc = '[T]est [V]isit' })
+-- vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', { noremap = true, desc = '[T]est [N]earest' })
+-- vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { noremap = true, desc = '[T]est [N]earest' })
+-- vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { noremap = true, desc = '[T]est [L]ast' })
+-- vim.keymap.set('n', '<leader>tv', ':TestVisti<CR>', { noremap = true, desc = '[T]est [V]isit' })
+--
+-- vim.keymap.set('n', '<leader>twn', ':TestNearest --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
+-- vim.keymap.set('n', '<leader>twf', ':TestFile --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
+-- vim.keymap.set('n', '<leader>twl', ':TestLast --watch<CR>', { noremap = true, desc = '[T]est [W]atch [L]ast' })
 
-vim.keymap.set('n', '<leader>twn', ':TestNearest --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
-vim.keymap.set('n', '<leader>twf', ':TestFile --watch<CR>', { noremap = true, desc = '[T]est [W]atch [N]earest' })
-vim.keymap.set('n', '<leader>twl', ':TestLast --watch<CR>', { noremap = true, desc = '[T]est [W]atch [L]ast' })
+-- NEO TEST KEYMAPS
+vim.keymap.set('n', '<leader>tn', ':Neotest run<CR>', { noremap = true, desc = '[T]est [N]earest' })
+vim.keymap.set('n', '<leader>tf', ':Neotest run file<CR>', { noremap = true, desc = '[T]est [F]ile' })
+vim.keymap.set('n', '<leader>tl', ':Neotest run last<CR>', { noremap = true, desc = '[T]est [L]ast' })
+
+vim.keymap.set('n', '<leader>to', ':Neotest output<CR>', { noremap = true, desc = '[T]est [O]utoput' })
+vim.keymap.set('n', '<leader>tp', ':Neotest output-panel<CR>', { noremap = true, desc = 'Test outoput [P]anel' })
+vim.keymap.set('n', '<leader>ts', ':Neotest summary<CR>', { noremap = true, desc = '[T]est [S]ummary' })
 
 -- Remap toggle last buffer
 vim.keymap.set('n', '\\', '<C-6>', { noremap = true })
@@ -243,7 +252,7 @@ vim.keymap.set('n', '<leader>cn', ':CopyFileName<CR>', { noremap = true, desc = 
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
   change_detection = { notify = false, enabled = false },
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   { 'numToStr/Comment.nvim', opts = {} },
 
