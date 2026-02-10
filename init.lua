@@ -237,7 +237,7 @@ vim.o.autoread = true
 
 -- Create an autocommand to check for file changes
 vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
-  command = "if mode() != 'c' | checktime | endif",
+  command = "silent! if mode() != 'c' | checktime | endif",
   pattern = { '*' },
 })
 
@@ -618,6 +618,11 @@ require('lazy').setup {
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
+            -- Skip tsserver setup since typescript-tools.nvim handles it
+            if server_name == 'tsserver' then
+              return
+            end
+
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling

@@ -41,14 +41,25 @@ return {
   { 'akinsho/toggleterm.nvim', version = '*', config = true },
   {
     'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {
-      settings = {
-        tsserver_plugins = {
-          '@styled/typescript-styled-plugin',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig', 'saghen/blink.cmp' },
+    config = function()
+      -- Get blink.cmp capabilities for completion support
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+      require('typescript-tools').setup {
+        capabilities = capabilities,
+        on_attach = function(_client, _bufnr)
+          -- This ensures the LspAttach autocommand fires properly
+          -- The autocommand in init.lua will handle keymaps
+        end,
+        settings = {
+          tsserver_plugins = {
+            '@styled/typescript-styled-plugin',
+          },
         },
-      },
-    },
+      }
+    end,
   },
   {
     'christoomey/vim-tmux-navigator',
