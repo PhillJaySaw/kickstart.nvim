@@ -109,6 +109,11 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 vim.keymap.set('n', '<leader>f', ':w<CR>', { noremap = true, desc = 'Save(Update) file' })
 
+-- Format buffer with conform.nvim
+vim.keymap.set({ 'n', 'v' }, '<leader>F', function()
+  require('conform').format { async = true, lsp_fallback = true }
+end, { noremap = true, desc = '[F]ormat buffer' })
+
 -- Center cursor after C-d and C-u
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
@@ -572,6 +577,61 @@ require('lazy').setup {
           end,
         },
 
+        vtsls = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                parameterNames = { enabled = 'literals' },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+              preferences = {
+                importModuleSpecifier = 'relative',
+              },
+              tsserver = {
+                pluginPaths = {
+                  '@styled/typescript-styled-plugin',
+                },
+              },
+            },
+            javascript = {
+              inlayHints = {
+                parameterNames = { enabled = 'literals' },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
+              },
+            },
+          },
+          on_attach = function(client, bufnr)
+            -- Enable organize imports on save
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.code_action {
+                  context = {
+                    only = { 'source.organizeImports' },
+                  },
+                  apply = true,
+                }
+              end,
+            })
+          end,
+        },
+
         lua_ls = {
           settings = {
             Lua = {
@@ -612,17 +672,14 @@ require('lazy').setup {
         'stylua', -- Used to format lua code
         'gopls',
         'graphql-language-service-cli',
+        'vtsls', -- TypeScript language server
+        'prettierd', -- Prettier formatter (faster daemon version)
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
-            -- Skip tsserver setup since typescript-tools.nvim handles it
-            if server_name == 'tsserver' then
-              return
-            end
-
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
